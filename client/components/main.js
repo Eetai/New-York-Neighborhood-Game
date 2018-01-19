@@ -10,17 +10,20 @@ class Main extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.randomData()
   }
 
   render() {
-    return (
-      <div>
-        <h1>New York Neighborhood Game</h1>
-        <img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.7278802,-73.9862891&fov=90&heading=235&pitch=10&key=AIzaSyAACg1VngC5Z7lZNONv_tUKnWaToYRgQ6A" />
-      </div>
-    )
+    if (this.props.addresses.length) {
+      return (
+        <div>
+          <h1>New York Neighborhood Game</h1>
+          <img src={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${this.props.addresses[0].LAT},${this.props.addresses[0].LON}&fov=90&heading=235&pitch=10&key=AIzaSyAACg1VngC5Z7lZNONv_tUKnWaToYRgQ6A`} />
+        </div>
+      )
+    }
+    else return (<div></div>)
   }
 }
 
@@ -30,7 +33,7 @@ class Main extends React.Component {
  */
 const mapState = (state) => {
   return {
-    // isLoggedIn: !!state.user.id
+    addresses: state.addresses
   }
 }
 
