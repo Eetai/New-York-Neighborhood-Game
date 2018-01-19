@@ -1,0 +1,41 @@
+const Sequelize = require('sequelize')
+const db = require('../db')
+
+const Addresses = db.define('addresses', {
+  LON: {
+    type: Sequelize.STRING,
+  },
+  LAT: {
+    type: Sequelize.STRING,
+  },
+  NUMBER: {
+    type: Sequelize.STRING,
+  },
+  STREET: {
+    type: Sequelize.STRING,
+  },
+  UNIT: {
+    type: Sequelize.STRING,
+  },
+  CITY: {
+    type: Sequelize.STRING,
+  },
+  DISTRICT: {
+    type: Sequelize.STRING,
+  },
+  REGION: {
+    type: Sequelize.STRING,
+  },
+  POSTCODE: {
+    type: Sequelize.STRING,
+  },
+  HASH: {
+    type: Sequelize.STRING,
+  },
+  ID: {
+    type: Sequelize.STRING,
+  }
+}
+)
+
+module.exports = Addresses
