@@ -31,9 +31,6 @@ const Addresses = db.define('addresses', {
   },
   HASH: {
     type: Sequelize.STRING,
-  },
-  ID: {
-    type: Sequelize.STRING,
   }
 }
 )
