@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Addresses = db.define('addresses', {
+const addresses = db.define('addresses', {
   LON: {
     type: Sequelize.STRING,
   },
@@ -31,8 +31,11 @@ const Addresses = db.define('addresses', {
   },
   HASH: {
     type: Sequelize.STRING,
+  },
+  BOROUGH: {
+    type: Sequelize.STRING
   }
 }
 )
 
-module.exports = Addresses
+module.exports = addresses

@@ -1,5 +1,10 @@
-const Addresses = require('./addresses')
+const addresses = require('./addresses')
+const zipcodes = require('./zipcodes')
+
+
+addresses.hasOne(zipcodes, { foreignKey: 'ZIPCode' })
 
 module.exports = {
-  Addresses
+  addresses
+  , zipcodes
 }

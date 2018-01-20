@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { randomData } from '../store'
+import GameShell from './game-shell'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 class Main extends React.Component {
 
@@ -15,18 +17,15 @@ class Main extends React.Component {
   }
 
   render() {
-    if (this.props.addresses.length) {
-      return (
+    return (
+      <MuiThemeProvider>
         <div>
-          <h1>New York Neighborhood Game</h1>
-          <img src={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${this.props.addresses[0].LAT},${this.props.addresses[0].LON}&fov=90&heading=235&pitch=10&key=AIzaSyAACg1VngC5Z7lZNONv_tUKnWaToYRgQ6A`} />
+          <GameShell />
         </div>
-      )
-    }
-    else return (<div></div>)
+      </MuiThemeProvider>
+    )
   }
 }
-
 
 /**
  * CONTAINER
