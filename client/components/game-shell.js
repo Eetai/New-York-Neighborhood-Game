@@ -4,20 +4,69 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { randomData } from '../store'
 import RaisedButton from 'material-ui/RaisedButton'
-import ReactCountdownClock from 'react-countdown-clock'
 
 class GameShell extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
-            answer: Math.floor(Math.random() * 4), correct: 0,
-            false: 0, countdown: 10
+            answer: Math.floor(Math.random() * 4),
+            correct: 0,
+            false: 0,
+            time: {},
+            seconds: 10,
+            started: false
         };
+
+        this.timer = 0;
+        this.startTimer = this.startTimer.bind(this);
+        this.countDown = this.countDown.bind(this);
     }
 
     componentWillMount() {
         this.props.randomData()
+        this.startTimer()
+    }
+    secondsToTime(secs) {
+        let hours = Math.floor(secs / (60 * 60));
+        let divisor_for_minutes = secs % (60 * 60);
+        let minutes = Math.floor(divisor_for_minutes / 60);
+        let divisor_for_seconds = divisor_for_minutes % 60;
+        let seconds = Math.ceil(divisor_for_seconds);
+        let obj = {
+            "h": hours,
+            "m": minutes,
+            "s": seconds
+        };
+        return obj;
+    }
+
+    componentDidMount() {
+        let timeLeftVar = this.secondsToTime(this.state.seconds);
+        this.setState({ time: timeLeftVar });
+    }
+
+    startTimer() {
+        clearInterval(this.timer);
+        this.timer = setInterval(this.countDown, 1000);
+        this.setState({ seconds: 10 });
+    }
+
+    countDown() {
+        // Remove one second, set state so a re-render happens.
+        let seconds = this.state.seconds - 1;
+        this.setState({
+            time: this.secondsToTime(seconds),
+            seconds: seconds,
+        });
+
+        // Check if we're at zero.
+        if (seconds === 0) {
+            clearInterval(this.timer);
+            this.handleClick(-1)
+            this.startTimer()
+        }
     }
 
 
@@ -26,7 +75,7 @@ class GameShell extends React.Component {
         else this.setState({ false: this.state.false + 1 })
         this.setState({ answer: Math.floor(Math.random() * 4) })
         this.props.randomData()
-        this.setState({ countdown: 10 })
+        this.startTimer()
     }
 
     render() {
@@ -41,18 +90,13 @@ class GameShell extends React.Component {
                     <RaisedButton onClick={() => this.handleClick(1)} label={this.props.addresses[1].STREET} /><br />
                     <RaisedButton onClick={() => this.handleClick(2)} label={this.props.addresses[2].STREET} /><br />
                     <RaisedButton onClick={() => this.handleClick(3)} label={this.props.addresses[3].STREET} />
-
+                    <br />{this.state.seconds}
                     <div>
                         Correct: {this.state.correct}<br />
                         Wrong: {this.state.false}<br />
                         Percent Correct: {this.state.correct ? this.state.correct * 100 / (this.state.false + this.state.correct) : 0}%<br />
                     </div >
-                    <ReactCountdownClock
-                        seconds={this.state.countdown}
-                        color="#000"
-                        alpha={0.9}
-                        size={100}
-                        onComplete={() => this.handleClick(-1)} />
+
                 </div>
             )
         }
@@ -85,5 +129,6 @@ export default withRouter(connect(mapState, mapDispatch)(GameShell))
  * PROP TYPES
  */
 GameShell.propTypes = {
-    children: PropTypes.object
+    children: PropTypes.object,
+    seconds: PropTypes.number
 }
