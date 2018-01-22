@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import history from './history'
 import { Main } from './components'
 import { GameShell } from './components/game-shell'
-import { highscores } from './components/highscores'
 import { me } from './store'
 
 /**
@@ -22,7 +21,6 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <Switch>
-            <Route exact path="/highscore" component={highscores} />
           </Switch>
         </Main>
       </Router>

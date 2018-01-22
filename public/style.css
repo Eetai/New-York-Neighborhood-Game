@@ -19,3 +19,12 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+body{
+  background-image:url('https://thenypost.files.wordpress.com/2017/04/new-york.jpg');
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  line-height:20px; font-size:14px;
+  font-family:"Trebuchet MS";
+  margin:0
+}

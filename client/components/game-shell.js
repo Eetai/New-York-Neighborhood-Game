@@ -16,7 +16,8 @@ class GameShell extends React.Component {
             false: 0,
             time: {},
             seconds: 10,
-            started: false
+            started: false,
+            last: ''
         };
 
         this.timer = 0;
@@ -71,7 +72,8 @@ class GameShell extends React.Component {
 
 
     handleClick(answer) {
-        if (this.state.correct + this.state.false > 4) this.props.history.push('/highscore');
+        console.log(this.props.addresses[this.state.answer].STREET)
+        this.setState({ last: this.props.addresses[this.state.answer].STREET })
         if (this.state.answer === answer) this.setState({ correct: this.state.correct + 1 })
         else this.setState({ false: this.state.false + 1 })
         this.setState({ answer: Math.floor(Math.random() * 4) })
@@ -80,24 +82,29 @@ class GameShell extends React.Component {
     }
 
     render() {
+
+
+
         if (this.props.addresses.length) {
             return (
-                <div>
-                    <h1>New York Neighborhood Game</h1>
-
+                <div><center>
+                    <div><h1 >New York Neighborhood Game</h1></div>
                     <img src={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${this.props.addresses[this.state.answer].LAT},${this.props.addresses[this.state.answer].LON}&fov=90&heading=235&pitch=10&key=AIzaSyAACg1VngC5Z7lZNONv_tUKnWaToYRgQ6A`} />
                     <br />
-                    <RaisedButton onClick={() => this.handleClick(0)} label={this.props.addresses[0].STREET} /><br />
-                    <RaisedButton onClick={() => this.handleClick(1)} label={this.props.addresses[1].STREET} /><br />
-                    <RaisedButton onClick={() => this.handleClick(2)} label={this.props.addresses[2].STREET} /><br />
-                    <RaisedButton onClick={() => this.handleClick(3)} label={this.props.addresses[3].STREET} />
-                    <br />{this.state.seconds}
                     <div>
-                        Correct: {this.state.correct}<br />
-                        Wrong: {this.state.false}<br />
-                        Percent Correct: {this.state.correct ? this.state.correct * 100 / (this.state.false + this.state.correct) : 0}%<br />
-                    </div >
-
+                        <RaisedButton onClick={() => this.handleClick(0)} label={this.props.addresses[0].STREET} /><br />
+                        <RaisedButton onClick={() => this.handleClick(1)} label={this.props.addresses[1].STREET} /><br />
+                        <RaisedButton onClick={() => this.handleClick(2)} label={this.props.addresses[2].STREET} /><br />
+                        <RaisedButton onClick={() => this.handleClick(3)} label={this.props.addresses[3].STREET} />
+                        <br />
+                        <br />{this.state.seconds}
+                        <div><br />
+                            Correct: {this.state.correct}<br />
+                            Wrong: {this.state.false}<br />
+                            Percent Correct: {this.state.correct ? (this.state.correct * 100 / (this.state.false + this.state.correct)).toFixed(2) : 0}%<br />
+                            Previous answer: {this.state.last}
+                        </div >
+                    </div></center>
                 </div>
             )
         }
