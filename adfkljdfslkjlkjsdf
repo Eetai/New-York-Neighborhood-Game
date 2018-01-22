@@ -1,0 +1,10 @@
+                              Table "public.zipcodes"
+   Column   |       Type        | Modifiers | Storage  | Stats target | Description 
+------------+-------------------+-----------+----------+--------------+-------------
+ CountyName | character varying |           | extended |              | 
+ ZIPCode    | character varying | not null  | extended |              | 
+Indexes:
+    "ZIPCode" PRIMARY KEY, btree ("ZIPCode")
+Referenced by:
+    TABLE "addresses" CONSTRAINT "addresses_zipcodes_fk" FOREIGN KEY ("POSTCODE") REFERENCES zipcodes("ZIPCode")
+

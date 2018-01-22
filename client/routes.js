@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { Route, Switch, Router } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import { Main, Login, Signup, UserHome } from './components'
+import { Main } from './components'
+import { GameShell } from './components/game-shell'
+import { highscores } from './components/highscores'
 import { me } from './store'
 
 /**
@@ -11,7 +13,6 @@ import { me } from './store'
  */
 class Routes extends Component {
   componentDidMount() {
-    // this.props.loadInitialData()
   }
 
   render() {
@@ -21,18 +22,7 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <Switch>
-            {/* Routes placed here are available to all visitors */}
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            {
-              isLoggedIn &&
-              <Switch>
-                {/* Routes placed here are only available after logging in */}
-                <Route path="/home" component={UserHome} />
-              </Switch>
-            }
-            {/* Displays our Login component as a fallback */}
-            <Route component={Login} />
+            <Route exact path="/highscore" component={highscores} />
           </Switch>
         </Main>
       </Router>

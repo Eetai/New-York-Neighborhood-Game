@@ -71,6 +71,7 @@ class GameShell extends React.Component {
 
 
     handleClick(answer) {
+        if (this.state.correct + this.state.false > 4) this.props.history.push('/highscore');
         if (this.state.answer === answer) this.setState({ correct: this.state.correct + 1 })
         else this.setState({ false: this.state.false + 1 })
         this.setState({ answer: Math.floor(Math.random() * 4) })
